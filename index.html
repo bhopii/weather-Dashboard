@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div>Weather Dashboard</div>
+    </header>
+    <section class="left-sections">
+      <section id="search-btn-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h5>Search for city:</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="search-container">
+                <input type="text" class="search-box"id="search-input-box" placeholder="Search" />
+                <button class="search-button">
+                  <img src="./Assets/images.png" width="20" height="20" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="city-list-section">
+        <div class="container">
+          <div class="row border city-row">
+            <div class="col-12">
+              <p>Atlanta</p>
+            </div>
+          </div>
+
+          <div class="row border city-row">
+            <div class="col-12">
+              <p>Phoenix</p>
+            </div>
+          </div>
+
+          <div class="row border city-row">
+            <div class="col-12">
+              <p>Orlando</p>
+            </div>
+          </div>
+
+          <div class="row border city-row">
+            <div class="col-12">
+              <p>L.A</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <main>
+      <section id="current-details-section">
+        <!-- <h2>Atlanta (10/08/2020)</h2>
+        <p>Temperature : 90.9F</p>
+        <p>Humidity : 41%</p>
+        <p>Wind Speed : 407MPH</p>
+        <p>UV Index : <span>9.49</span></p> -->
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <h2>Atlanta (10/08/2020)</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p>Temperature : 90.9F</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p>Humidity : 41%</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p>Wind Speed : 4.7 MPH</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p>UV Index : <span>9.49</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="weather-forecast-section">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm">
+              <h3>5-Day Forecast:</h3>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+                <div class="card bg-primary text-white text-left p-3">
+                    <blockquote class="blockquote mb-0">
+                      <p>10/08/2019</p>
+                      <p>image will go here</p>
+                      <p>Temp:86.84 F</p>
+                      <p>Humidity: 43%</p>
+
+                    </blockquote>
+                  </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="card bg-primary text-white text-left p-3">
+                    <blockquote class="blockquote mb-0">
+                      <p>10/08/2019</p>
+                      <p>image will go here</p>
+                      <p>Temp:86.84 F</p>
+                      <p>Humidity: 43%</p>
+
+                    </blockquote>
+                  </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="card bg-primary text-white text-left p-3">
+                    <blockquote class="blockquote mb-0">
+                      <p>10/08/2019</p>
+                      <p>image will go here</p>
+                      <p>Temp:86.84 F</p>
+                      <p>Humidity: 43%</p>
+
+                    </blockquote>
+                  </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="card bg-primary text-white text-left p-3">
+                    <blockquote class="blockquote mb-0">
+                      <p>10/08/2019</p>
+                      <p>image will go here</p>
+                      <p>Temp:86.84 F</p>
+                      <p>Humidity: 43%</p>
+
+                    </blockquote>
+                  </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="card bg-primary text-white text-left p-3">
+                    <blockquote class="blockquote mb-0">
+                      <p>10/08/2019</p>
+                      <p>image will go here</p>
+                      <p>Temp:86.84 F</p>
+                      <p>Humidity: 43%</p>
+
+                    </blockquote>
+                  </div>
+            </div>
+
+
+          </div>
+        </div>
+        
+      </section>
+    </main>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
