@@ -27,6 +27,7 @@ main {
   width: 80%;
   float: left;
   padding: 10px 0px 10px 10px;
+  display: none;
 }
 
 
@@ -75,4 +76,5 @@ main {
 
 .city-row {
   background-color: white;
+  /* padding-top: 10px; */
 }
