@@ -1,18 +1,15 @@
 //array of cities
 var cityArray;
 
-
 //after the page loads
 function init() {
-    cityArray = JSON.parse(localStorage.getItem("cities"));
-    if(cityArray === null){
-        cityArray =[];
-  
-    }
-    createCityRow();
-
+  cityArray = JSON.parse(localStorage.getItem("cities"));
+  if (cityArray === null) {
+    cityArray = [];
   }
-  init();
+  createCityRow();
+}
+init();
 
 //event listener on search button
 $("#search-btn").on("click", function () {
@@ -25,8 +22,7 @@ $("#search-btn").on("click", function () {
   createCityRow();
   $("#search-input-box").val("");
   //call function invoke API and show data
-  showWeatherData(cityNameInput); 
-
+  showWeatherData(cityNameInput);
 });
 
 function createCityRow() {
@@ -46,39 +42,57 @@ function createCityRow() {
   }
 }
 
-function showWeatherData(cityNameInput){
-    var geoQueryURL = "https://api.geocod.io/v1.6/geocode?q="+cityNameInput+"&api_key=a3b545f33b7513f1aa5a508a505f7ba0f7f88f1";
-    //to get latitude and longitude of provided city.
+function showWeatherData(cityNameInput) {
+  var geoQueryURL =
+    "https://api.geocod.io/v1.6/geocode?q=" +
+    cityNameInput +
+    "&api_key=a3b545f33b7513f1aa5a508a505f7ba0f7f88f1";
+  //to get latitude and longitude of provided city.
 
+  $.ajax({
+    url: geoQueryURL,
+    method: "GET",
+  }).then(function (response) {
+    var lat = response.results[0].location.lat;
+    var long = response.results[0].location.lng;
+
+    //get data from weather api
+    var weatherURL =
+      "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+      lat +
+      "&lon=" +
+      long +
+      "&exclude=minutely,hourly,alerts&appid=d8cebcf8331bd9f62eee21d496dc4a09&units=imperial";
     $.ajax({
-        url : geoQueryURL,
-        method :"GET"
-    }).then(function(response){
-       var lat = response.results[0].location.lat;
-       var long = response.results[0].location.lng;
-
-        //get data from weather api
-       var weatherURL = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+long+"&exclude=minutely,hourly,alerts&appid=d8cebcf8331bd9f62eee21d496dc4a09&units=imperial";
-       $.ajax({
-           url : weatherURL,
-           method :"GET"
-       }).then(function(response){
-           console.log(response);
-           showCurrentWeatherDetails(response,cityNameInput);
-        //    showForecastDetails(response);
-
-       });
+      url: weatherURL,
+      method: "GET",
+    }).then(function (response) {
+      console.log(response);
+      showCurrentWeatherDetails(response, cityNameInput);
+      //    showForecastDetails(response);
     });
+  });
+}
+
+function showCurrentWeatherDetails(response, cityNameInput) {
+  $("main").attr("style", "display:block;");
+  $("#current-city-name").text(cityNameInput);
+  var formattedDate = getFormattedDate(response.current.dt);
+  $("#current-date").text(formattedDate);
+  $("#temperature").text(response.current.temp);
+  $("#humidity").text(response.current.humidity);
+  $("#wind-speed").text(response.current.wind_speed);
+  $("#UV-Index").text(response.current.uvi);
 
 
-};
-
-
-function showCurrentWeatherDetails(response,cityNameInput){
-    $("main").attr("style", "display:block;");
-    $("#current-date-city-name").text(cityNameInput);
-    
 
 }
 
-
+function getFormattedDate(epochDate){
+  var date = new Date(epochDate*1000);
+  var day = date.getDate();
+  var month = date.getMonth();
+  var year = date.getFullYear();
+  var fullDate = (month+1) + "/" + day + "/" + year;
+  return fullDate;
+}

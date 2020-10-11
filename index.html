@@ -37,7 +37,7 @@
                   placeholder="Search"
                 />
                 <button class="search-button" id="search-btn">
-                  <img src="./Assets/images.png" width="20" height="20" />
+                  <img src="./Assets/images/search-icon.png" width="20" height="20" />
                 </button>
               </div>
             </div>
@@ -83,29 +83,30 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-              <h2 id="current-date-city-name">
-                Atlanta (10/08/2020)<span id="current-date-weather-pic"
-                  >image goes here</span
-                >
+              <h2>
+                <span id="current-city-name">Atlanta</span> (<span
+                  id="current-date"
+                  >10/08/2020</span
+                >)  <span><img src="./Assets/images/cloudy.png" height = "30" width="30" id="current-date-weather-pic"></span>
               </h2>
             </div>
           </div>
-          <div class="row">
+          <div class="row current-temp-display-area">
             <div class="col-12">
-              <p>Temperature : <span id="temparature">90.9</span> °F</p>
+              <p>Temperature : <span id="temperature">90.9</span> °F</p>
             </div>
           </div>
-          <div class="row">
+          <div class="row current-temp-display-area">
             <div class="col-12">
               <p>Humidity :<span id="humidity">41</span> %</p>
             </div>
           </div>
-          <div class="row">
+          <div class="row current-temp-display-area">
             <div class="col-12">
               <p>Wind Speed :<span id="wind-speed">4.7</span> MPH</p>
             </div>
           </div>
-          <div class="row">
+          <div class="row current-temp-display-area">
             <div class="col-12">
               <p>UV Index : <span id="UV-Index">9.49</span></p>
             </div>
