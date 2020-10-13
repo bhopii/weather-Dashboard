@@ -62,10 +62,10 @@ function createCityRow() {
   }
 }
 
-//Function to check duplicate 
-function checkDuplicate(cityName){
-  for(i=0; i<cityArray.length; i++) {
-    if(cityName.toLowerCase() === cityArray[i].toLowerCase()) {
+//Function to check duplicate
+function checkDuplicate(cityName) {
+  for (i = 0; i < cityArray.length; i++) {
+    if (cityName.toLowerCase() === cityArray[i].toLowerCase()) {
       return true;
     }
   }
@@ -96,7 +96,7 @@ function showWeatherData(cityNameInput) {
       long +
       "&exclude=minutely,hourly,alerts&appid=d8cebcf8331bd9f62eee21d496dc4a09&units=imperial";
 
-      //ajax call to receive response
+    //ajax call to receive response
     $.ajax({
       url: weatherURL,
       method: "GET",
@@ -104,7 +104,7 @@ function showWeatherData(cityNameInput) {
       console.log(response);
       //call function to display current day weather details
       showCurrentWeatherDetails(response, cityNameInput);
-       //call function to display 5days forecast
+      //call function to display 5days forecast
       showForecastDetails(response);
     });
   });
@@ -123,10 +123,10 @@ function showCurrentWeatherDetails(response, cityNameInput) {
   //get icon code from API response and set in a variable
   var imageIcon = response.current.weather[0].icon;
   console.log(imageIcon);
-  //set the icon code in url to get the image 
+  //set the icon code in url to get the image
   var imageUrl = "http://openweathermap.org/img/wn/" + imageIcon + "@2x.png";
   console.log(imageUrl);
-  //set attribute to display the image  
+  //set attribute to display the image
   $("#current-date-weather-pic").attr("src", imageUrl);
   //get temperature from API response and set the value in assigned location
   $("#temperature").text(response.current.temp);
@@ -203,7 +203,7 @@ function showUvIndex(uvIndex) {
   console.log(uvIndex);
   //set uvi in assigned location
   $("#UV-Index").text(uvIndex);
-  //set colors as per conditions 
+  //set colors as per conditions
   if (uvIndex <= 2) {
     $("#UV-Index").attr("style", "background-color: green;");
   } else if ((uvIndex >= 3) & (uvIndex <= 5)) {
