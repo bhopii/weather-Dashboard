@@ -3,7 +3,9 @@ var cityArray;
 
 //after the page loads
 function init() {
+  //fetch items stored in local storage
   cityArray = JSON.parse(localStorage.getItem("cities"));
+  //if their is no items in local storage create a blank array
   if (cityArray === null) {
     cityArray = [];
   }
@@ -13,10 +15,13 @@ init();
 
 //event listener on search button
 $("#search-btn").on("click", function () {
+  //fetch value from input box and store in a variable
   var cityNameInput = $("#search-input-box").val();
+  //if the value entered is not blank
   if (cityNameInput != "") {
-    //push the city names in cityArray
-    if (!cityArray.includes(cityNameInput)) {
+    //restrict duplication of city names in city array
+    if (!checkDuplicate(cityNameInput)) {
+      //push the city names in cityArray
       cityArray.push(cityNameInput);
       //adding o local storage
       localStorage.setItem("cities", JSON.stringify(cityArray));
@@ -28,74 +33,114 @@ $("#search-btn").on("click", function () {
     showWeatherData(cityNameInput);
   }
 });
-
+//create rows to display the city in the list
 function createCityRow() {
+  //empty the list after every loop
   $("#city-list-container").empty();
+  //set loop to repeat the process
   for (i = 0; i < cityArray.length; i++) {
     //create div for row
     var divRow = $("<div>");
+    //set class for row
     divRow.attr("class", "row border city-row");
+    //set id for row
     divRow.attr("city", cityArray[i]);
+    //create div for colum
     var divCol = $("<div>");
+    //set class to colum
     divCol.attr("class", "col-12");
+    //create a paragraph tag
     var para = $("<p>");
+    //insert city name in the paragraph tag
     para.text(cityArray[i]);
+    //append paragraph tag in colum
     divCol.append(para);
+    //append colum in row
     divRow.append(divCol);
+    //append row in container
     $("#city-list-container").append(divRow);
   }
 }
 
-function showWeatherData(cityNameInput) {
-  var geoQueryURL =
-    "https://api.geocod.io/v1.6/geocode?q=" +
-    cityNameInput +
-    "&api_key=a3b545f33b7513f1aa5a508a505f7ba0f7f88f1";
-  //to get latitude and longitude of provided city.
+//Function to check duplicate 
+function checkDuplicate(cityName){
+  for(i=0; i<cityArray.length; i++) {
+    if(cityName.toLowerCase() === cityArray[i].toLowerCase()) {
+      return true;
+    }
+  }
+  return false;
+}
 
+//function to show current weather details
+function showWeatherData(cityNameInput) {
+  //API call to get latitude & longitude of the city passed in parameter
+  var geoQueryURL =
+    "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+    cityNameInput +
+    "&key=AIzaSyBWLecqA6Khzq2zipbMt9Xlflfg9EXbrvI";
+
+  //ajax call to receive the response
   $.ajax({
     url: geoQueryURL,
     method: "GET",
   }).then(function (response) {
-    var lat = response.results[0].location.lat;
-    var long = response.results[0].location.lng;
+    var lat = response.results[0].geometry.location.lat;
+    var long = response.results[0].geometry.location.lng;
 
-    //get data from weather api
+    //API call to receive weather data
     var weatherURL =
       "https://api.openweathermap.org/data/2.5/onecall?lat=" +
       lat +
       "&lon=" +
       long +
       "&exclude=minutely,hourly,alerts&appid=d8cebcf8331bd9f62eee21d496dc4a09&units=imperial";
+
+      //ajax call to receive response
     $.ajax({
       url: weatherURL,
       method: "GET",
     }).then(function (response) {
       console.log(response);
+      //call function to display current day weather details
       showCurrentWeatherDetails(response, cityNameInput);
+       //call function to display 5days forecast
       showForecastDetails(response);
     });
   });
 }
 
+//function to show the selected city's weather details on for the current day
 function showCurrentWeatherDetails(response, cityNameInput) {
+  //set attribute to show the display from hide
   $("main").attr("style", "display:block;");
+  //display city name
   $("#current-city-name").text(cityNameInput);
+  //call function to display the date in mm/dd/yy format & store it in a variable
   var formattedDate = getFormattedDate(response.current.dt);
+  //display date
   $("#current-date").text(formattedDate);
+  //get icon code from API response and set in a variable
   var imageIcon = response.current.weather[0].icon;
   console.log(imageIcon);
-  var imageUrl = "http://openweathermap.org/img/wn/"+ imageIcon + "@2x.png";
+  //set the icon code in url to get the image 
+  var imageUrl = "http://openweathermap.org/img/wn/" + imageIcon + "@2x.png";
   console.log(imageUrl);
-  $("#current-date-weather-pic").attr("src",imageUrl);
+  //set attribute to display the image  
+  $("#current-date-weather-pic").attr("src", imageUrl);
+  //get temperature from API response and set the value in assigned location
   $("#temperature").text(response.current.temp);
+  //get humidity from API response and set the value in assigned location
   $("#humidity").text(response.current.humidity);
+  //get wind-speed from API response and set the value in assigned location
   $("#wind-speed").text(response.current.wind_speed);
+  //get uvi and store it in a variable
   var uvIndex = response.current.uvi;
+  //call function to display the back-ground color for uvi according to response
   showUvIndex(uvIndex);
-  
 }
 
+//function to display in date in epoch format
 function getFormattedDate(epochDate) {
   var date = new Date(epochDate * 1000);
   var day = date.getDate();
@@ -105,8 +150,11 @@ function getFormattedDate(epochDate) {
   return fullDate;
 }
 
+//function to display 5days forecast
 function showForecastDetails(response) {
+  //empty the div before you start loop for the next city
   $("#five-day-forecast").empty();
+  // set loop to repeat the forecast for 5days
   for (i = 0; i < 5; i++) {
     var forecastDivRow = $("<div>");
     forecastDivRow.attr("class", "col-sm");
@@ -120,8 +168,7 @@ function showForecastDetails(response) {
 
     var paraImg = $("<img>");
     var imageIcon = response.daily[i].weather[0].icon;
-    var imageUrl = "http://openweathermap.org/img/wn/"+ imageIcon + "@2x.png";
-
+    var imageUrl = "http://openweathermap.org/img/wn/" + imageIcon + "@2x.png";
 
     paraImg.attr("src", imageUrl);
     paraImg.attr("height", "60");
@@ -143,15 +190,20 @@ function showForecastDetails(response) {
 
 //adding event listener to the cities present on the "citylist"
 // row so that when user clicks a particular city its details gets displayed on "main".
+
+//set onclick on the container followed by event delegation to rows where the city names are present
 $("#city-list-container").on("click", ".city-row", function () {
+  // identify the city name with class attr()
   var clickCityName = $(this).attr("city");
   //call function invoke API and show data
   showWeatherData(clickCityName);
 });
-
-function showUvIndex(uvIndex){
+//function to display the back-ground color for uvi according to response
+function showUvIndex(uvIndex) {
   console.log(uvIndex);
+  //set uvi in assigned location
   $("#UV-Index").text(uvIndex);
+  //set colors as per conditions 
   if (uvIndex <= 2) {
     $("#UV-Index").attr("style", "background-color: green;");
   } else if ((uvIndex >= 3) & (uvIndex <= 5)) {
