@@ -83,6 +83,11 @@ function showCurrentWeatherDetails(response, cityNameInput) {
   $("#current-city-name").text(cityNameInput);
   var formattedDate = getFormattedDate(response.current.dt);
   $("#current-date").text(formattedDate);
+  var imageIcon = response.current.weather[0].icon;
+  console.log(imageIcon);
+  var imageUrl = "http://openweathermap.org/img/wn/"+ imageIcon + "@2x.png";
+  console.log(imageUrl);
+  $("#current-date-weather-pic").attr("src",imageUrl);
   $("#temperature").text(response.current.temp);
   $("#humidity").text(response.current.humidity);
   $("#wind-speed").text(response.current.wind_speed);
@@ -114,9 +119,13 @@ function showForecastDetails(response) {
     paraDate.text(formattedDate);
 
     var paraImg = $("<img>");
-    paraImg.attr("src", "./Assets/images/cloudy.png");
-    paraImg.attr("height", "30");
-    paraImg.attr("width", "30");
+    var imageIcon = response.daily[i].weather[0].icon;
+    var imageUrl = "http://openweathermap.org/img/wn/"+ imageIcon + "@2x.png";
+
+
+    paraImg.attr("src", imageUrl);
+    paraImg.attr("height", "60");
+    paraImg.attr("width", "60");
 
     var paraTemp = $("<p>");
     paraTemp.text("Temp: " + response.daily[i].temp.day + " °F");
