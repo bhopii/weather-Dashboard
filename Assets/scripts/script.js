@@ -8,6 +8,9 @@ function init() {
   //if their is no items in local storage create a blank array
   if (cityArray === null) {
     cityArray = [];
+  } else {
+    //call function invoke API and show data
+    showWeatherData(cityArray[cityArray.length - 1]);
   }
   createCityRow();
 }
@@ -76,17 +79,17 @@ function checkDuplicate(cityName) {
 function showWeatherData(cityNameInput) {
   //API call to get latitude & longitude of the city passed in parameter
   var geoQueryURL =
-    "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+    "https://geocode.xyz/" +
     cityNameInput +
-    "&key=AIzaSyBWLecqA6Khzq2zipbMt9Xlflfg9EXbrvI";
+    "?json=1&auth=787471314802816619931x117746";
 
   //ajax call to receive the response
   $.ajax({
     url: geoQueryURL,
     method: "GET",
   }).then(function (response) {
-    var lat = response.results[0].geometry.location.lat;
-    var long = response.results[0].geometry.location.lng;
+    var lat = response.latt;
+    var long = response.longt;
 
     //API call to receive weather data
     var weatherURL =
