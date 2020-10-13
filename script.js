@@ -86,7 +86,9 @@ function showCurrentWeatherDetails(response, cityNameInput) {
   $("#temperature").text(response.current.temp);
   $("#humidity").text(response.current.humidity);
   $("#wind-speed").text(response.current.wind_speed);
-  $("#UV-Index").text(response.current.uvi);
+  var uvIndex = response.current.uvi;
+  showUvIndex(uvIndex);
+  
 }
 
 function getFormattedDate(epochDate) {
@@ -132,10 +134,24 @@ function showForecastDetails(response) {
 
 //adding event listener to the cities present on the "citylist"
 // row so that when user clicks a particular city its details gets displayed on "main".
-$("#city-list-container").on("click", ".city-row", function(){
-
+$("#city-list-container").on("click", ".city-row", function () {
   var clickCityName = $(this).attr("city");
   //call function invoke API and show data
   showWeatherData(clickCityName);
-
 });
+
+function showUvIndex(uvIndex){
+  console.log(uvIndex);
+  $("#UV-Index").text(uvIndex);
+  if (uvIndex <= 2) {
+    $("#UV-Index").attr("style", "background-color: green;");
+  } else if ((uvIndex >= 3) & (uvIndex <= 5)) {
+    $("#UV-Index").attr("style", "background-color: yellow;");
+  } else if ((uvIndex >= 6) & (uvIndex <= 7)) {
+    $("#UV-Index").attr("style", "background-color: orange;");
+  } else if ((uvIndex >= 8) & (uvIndex <= 10)) {
+    $("#UV-Index").attr("style", "background-color: red;");
+  } else {
+    $("#UV-Index").attr("style", "background-color: violet;");
+  }
+}
