@@ -16,8 +16,7 @@ function init() {
 }
 init();
 
-//event listener on search button
-$("#search-btn").on("click", function () {
+function captureCityName() {
   //fetch value from input box and store in a variable
   var cityNameInput = $("#search-input-box").val();
   //if the value entered is not blank
@@ -34,6 +33,20 @@ $("#search-btn").on("click", function () {
     $("#search-input-box").val("");
     //call function invoke API and show data
     showWeatherData(cityNameInput);
+  }
+}
+
+
+//event listener on search button click
+$("#search-btn").on("click", function (event) {
+  event.preventDefault();
+  captureCityName();
+});
+
+$("document").on("keypress", function (e) {
+  console.log("Enter event " + e.getCode());
+  if (e.which == 13) {
+    captureCityName();
   }
 });
 //create rows to display the city in the list
@@ -160,7 +173,7 @@ function showForecastDetails(response) {
   // set loop to repeat the forecast for 5days
   for (i = 0; i < 5; i++) {
     var forecastDivRow = $("<div>");
-    forecastDivRow.attr("class", "col-sm");
+    forecastDivRow.attr("class", "col-sm day-forecast");
 
     var cardDiv = $("<div>");
     cardDiv.attr("class", "card bg-primary text-white text-left p-3");
